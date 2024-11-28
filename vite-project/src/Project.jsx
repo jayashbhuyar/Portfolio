@@ -14,55 +14,68 @@ import { Link } from 'react-router-dom';
 
 const projects = [
   {
-    title: "RetailConnect",
-    description: "A full-stack web application connecting retailers and distributors with product catalogs, order management, and admin interface.",
+    title: "Retail-Pro",
+    description:
+      "A full-stack web application connecting retailers and distributors with product catalogs, order management, and admin interface.",
     technologies: ["React", "Node.js", "Express", "MongoDB", "Firebase"],
-    image: "https://res.cloudinary.com/dlx3l4a9p/image/upload/v1730382942/wjyihm0hyh0ctnkow2m0.png",
-    githubLink: "#",
-    demoLink: "#"
+    image:
+      "https://res.cloudinary.com/dlx3l4a9p/image/upload/v1730382942/wjyihm0hyh0ctnkow2m0.png",
+    githubLink: "https://github.com/jayashbhuyar/Retail-Connect",
+    demoLink: "https://retail-connect-final.vercel.app/",
   },
   {
     title: "Vehicle Sales Dashboard",
-    description: "Power BI dashboard visualizing vehicle sales trends to help businesses track performance and growth opportunities.",
+    description:
+      "Power BI dashboard visualizing vehicle sales trends to help businesses track performance and growth opportunities.",
     technologies: ["Power BI", "Data Analysis", "Business Intelligence"],
-    image: "https://miro.medium.com/v2/resize:fit:702/1*Ra02AqsQlC0KV229EvM98g.png",
-    demoLink: "#"
+    image:
+      "https://miro.medium.com/v2/resize:fit:702/1*Ra02AqsQlC0KV229EvM98g.png",
+    githubLink: "https://github.com/jayashbhuyar/Vehicle-Sales-Dashboard",
   },
   {
     title: "Student Analysis Dashboard",
-    description: "Power BI dashboard for analyzing student performance metrics to support educational institutions' decision-making.",
+    description:
+      "Power BI dashboard for analyzing student performance metrics to support educational institutions' decision-making.",
     technologies: ["Power BI", "Educational Analytics"],
     image: "https://media.datacamp.com/legacy/v1724169856/image_ff55d03003.png",
-    demoLink: "#"
+    githubLink:
+      "https://github.com/jayashbhuyar/Student-Data-Analysis-Dashboard",
   },
   {
     title: "E-commerce Dashboard",
-    description: "Power BI dashboard for tracking business metrics like sales and inventory for e-commerce performance monitoring.",
+    description:
+      "Power BI dashboard for tracking business metrics like sales and inventory for e-commerce performance monitoring.",
     technologies: ["Power BI", "Business Intelligence"],
     image: "https://cdn.dribbble.com/users/970957/screenshots/5504725/gif.gif",
-    demoLink: "#"
+    githubLink: "https://github.com/jayashbhuyar/E-commerce-Dashboard",
   },
   {
     title: "Technovanza Housecup",
-    description: "Leadership project in Technovanza committee, leading multiple teams and contributing to winning the housecup.",
+    description:
+      "Leadership project in Technovanza committee, leading multiple teams and contributing to winning the housecup.",
     technologies: ["Leadership", "Team Management"],
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5wssZ51XsWGUTJhFi5wbbDtE3mI5UGqfCGA&s",
-    demoLink: "#"
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5wssZ51XsWGUTJhFi5wbbDtE3mI5UGqfCGA&s",
+    // demoLink: "#"
   },
   {
     title: "Data Structures & Algorithms",
-    description: "Ongoing coding challenges improving skills with 175+ problems solved on GeeksforGeeks and 90+ on LeetCode.",
+    description:
+      "Ongoing coding challenges improving skills with 175+ problems solved on GeeksforGeeks and 90+ on LeetCode.",
     technologies: ["Algorithms", "Problem Solving"],
-    image: "https://leetcode.com/static/images/LeetCode_Sharing.png",
-    githubLink: "#"
+    image: "https://miro.medium.com/v2/resize:fit:799/0*ilw552fVUGbwIzbE.jpg",
+    demoLink: "https://www.geeksforgeeks.org/user/bhuyarjj7ul/",
+  //  demoLink: "https://leetcode.com/u/bhuyarjayash/"
   },
   {
     title: "ESP32 IoT Project",
-    description: "IoT solution using ESP32 microcontroller, integrating MongoDB for sensor data storage and retrieval.",
+    description:
+      "IoT solution using ESP32 microcontroller, integrating MongoDB for sensor data storage and retrieval.",
     technologies: ["IoT", "ESP32", "MongoDB"],
-    image: "https://disrupt-x.io/wp-content/uploads/2023/10/Planet-GIF-11-min.gif",
-    githubLink: "#"
-  }
+    image:
+      "https://disrupt-x.io/wp-content/uploads/2023/10/Planet-GIF-11-min.gif",
+    githubLink: "https://github.com/jayashbhuyar/Home_Automation",
+  },
 ];
 
 const ProjectCard = ({ project }) => {
