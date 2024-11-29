@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Code, 
   Database, 
@@ -8,87 +9,145 @@ import {
   PenTool, 
   GitBranch,
   Zap,
-  Star
+  Star,
+  Home
 } from 'lucide-react';
+import {Link} from 'react-router-dom';
 
-const SkillCard = ({ icon: Icon, title, description, proficiency, techs, achievements }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const SkillCard = ({ icon: Icon, title, description, proficiency, techs, achievements, index }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+
+  const cardVariants = {
+    initial: { 
+      opacity: 0, 
+      scale: 0.8,
+      rotate: index % 2 === 0 ? -5 : 5
+    },
+    animate: { 
+      opacity: 1, 
+      scale: 1,
+      rotate: 0,
+      transition: { 
+        type: "spring", 
+        stiffness: 300, 
+        damping: 20,
+        delay: index * 0.2
+      }
+    },
+    hover: {
+      scale: 1.05,
+      boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+      transition: { duration: 0.3 }
+    }
+  };
 
   return (
-    <div 
-      className="relative bg-white/15 backdrop-blur-xl border border-blue-200/20 rounded-2xl p-6 transform transition-all duration-500 hover:scale-105 hover:shadow-2xl group overflow-hidden"
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
+    <motion.div 
+      ref={cardRef}
+      variants={cardVariants}
+      initial="initial"
+      animate="animate"
+      whileHover="hover"
+      className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1a2980] to-[#26d0ce] p-6 shadow-2xl"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Glow effect */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-300 blur-lg"></div>
-      
-      <div className="relative z-10">
+      {/* Animated Background Effect */}
+      <motion.div 
+        className="absolute inset-0 bg-white/10 opacity-0"
+        animate={{ 
+          opacity: isHovered ? 0.2 : 0,
+          transition: { duration: 0.3 }
+        }}
+      />
+
+      <div className="relative z-10 text-white">
         <div className="flex items-center mb-4">
-          <div className="bg-blue-500/20 p-3 rounded-full mr-4">
-            <Icon className="text-blue-400 w-8 h-8" />
-          </div>
-          <h3 className="text-2xl font-bold text-white">{title}</h3>
+          <motion.div
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 0.6 }}
+            className="bg-white/20 p-3 rounded-full mr-4"
+          >
+            <Icon className="w-10 h-10 text-white" />
+          </motion.div>
+          <h3 className="text-3xl font-bold tracking-wide">{title}</h3>
         </div>
-        
-        <div className="relative overflow-hidden">
-          <div className={`transition-all duration-700 ease-in-out ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
-            <p className="text-gray-300 mb-4 text-sm">{description}</p>
-            
-            {/* Proficiency Bar */}
-            <div className="flex items-center mb-3">
-              <div className="w-full bg-gray-700 rounded-full h-3 mr-2">
-                <div 
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full" 
-                  style={{width: `${proficiency}%`}}
-                ></div>
-              </div>
-              <span className="text-sm text-gray-400 font-semibold">{proficiency}%</span>
-            </div>
-            
-            {/* Technologies */}
-            <div className="flex flex-wrap gap-2 mb-3">
-              {techs.map((tech, index) => (
-                <span 
-                  key={index} 
-                  className="px-2 py-1 bg-blue-900/30 text-blue-200 rounded-md text-xs"
+
+        <AnimatePresence>
+          {isHovered && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-sm mb-4 text-white/80">{description}</p>
+
+              {/* Skill Proficiency Bar */}
+              <div className="mb-4">
+                <div className="flex justify-between text-xs mb-1">
+                  <span>Skill Level</span>
+                  <span>{proficiency}%</span>
+                </div>
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${proficiency}%` }}
+                  transition={{ duration: 1, type: "tween" }}
+                  className="h-2 bg-white/50 rounded-full overflow-hidden"
                 >
-                  {tech}
-                </span>
-              ))}
-            </div>
-            
-            {/* Achievements */}
-            {achievements && (
-              <div className="mt-3">
-                <h4 className="text-sm font-semibold text-gray-200 mb-2 flex items-center">
-                  <Star className="w-4 h-4 mr-2 text-yellow-400" />
+                  <div 
+                    className="h-full bg-white" 
+                    style={{ width: '100%' }}
+                  />
+                </motion.div>
+              </div>
+
+              {/* Technologies */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {techs.map((tech, index) => (
+                  <motion.span 
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="px-3 py-1 bg-white/20 rounded-full text-xs"
+                  >
+                    {tech}
+                  </motion.span>
+                ))}
+              </div>
+
+              {/* Achievements */}
+              <div>
+                <h4 className="text-sm font-semibold mb-2 flex items-center">
+                  <Star className="w-4 h-4 mr-2 text-yellow-300" />
                   Key Achievements
                 </h4>
-                <ul className="text-xs text-gray-300 space-y-1">
-                  {achievements.map((achievement, index) => (
-                    <li key={index} className="flex items-center">
-                      <Zap className="w-3 h-3 mr-2 text-yellow-500" />
+                <ul className="space-y-1 text-xs">
+                  {achievements.map((achievement, idx) => (
+                    <motion.li 
+                      key={idx}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="flex items-center"
+                    >
+                      <Zap className="w-3 h-3 mr-2 text-yellow-300" />
                       {achievement}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </div>
-            )}
-          </div>
-        </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 const SkillsPage = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
   const skills = [
     {
       icon: Code,
@@ -151,18 +210,6 @@ const SkillsPage = () => {
       ]
     },
     {
-      icon: PenTool,
-      title: 'UI/UX Design',
-      description: 'Creating intuitive, visually stunning user experiences.',
-      proficiency: 75,
-      techs: ['Figma', 'Adobe XD', 'Responsive Design', 'Wireframing'],
-      achievements: [
-        'Designed user-centric interfaces',
-        'Created design systems',
-        'Implemented accessibility best practices'
-      ]
-    },
-    {
       icon: GitBranch,
       title: 'Version Control',
       description: 'Expert in collaborative development and code management.',
@@ -175,58 +222,41 @@ const SkillsPage = () => {
       ]
     }
   ];
-
+  
   return (
-    <div 
-      className="min-h-screen bg-cover bg-center bg-fixed relative overflow-hidden"
-      style={{
-        backgroundImage: 'url("https://i.pinimg.com/originals/d4/81/f3/d481f3c72e283309071f79e01b05c06d.gif")',
-        backgroundSize: 'cover'
-      }}
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="min-h-screen bg-gradient-to-br from-[#0f2027] to-[#203a43] flex items-center justify-center p-8"
     >
-      {/* Overlay to ensure better readability */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-      
-      <div className="relative z-10 container mx-auto px-4 py-16">
-        {/* Navigation */}
-        <nav className="absolute top-4 right-4 z-20">
-          <a 
-            href="/" 
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2 rounded-full transition-all transform hover:scale-105"
-          >
-            Home
-          </a>
-        </nav>
-        
-        {/* Title */}
-        <h1 className={`text-4xl md:text-6xl font-bold text-center text-white mb-12 transform transition-all duration-1000 ${
-          isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`}>
-          Jayash Bhuyar's Skills Spectrum
-        </h1>
-        
-        {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+       <Link 
+        to="/" 
+        className="absolute top-6 left-6 z-20 bg-blue-600/50 hover:bg-blue-600/70 p-3 rounded-full transition-all"
+      >
+        <Home className="text-white w-6 h-6" />
+      </Link>
+      <div className="container mx-auto">
+        <motion.h1 
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="text-5xl md:text-7xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-[#26d0ce] to-[#1a2980] mb-16"
+        >
+          Skill Constellation
+        </motion.h1>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skills.map((skill, index) => (
-            <div 
-              key={index} 
-              className={`transform transition-all duration-1000 delay-${index * 100} ${
-                isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-              }`}
-            >
-              <SkillCard 
-                icon={skill.icon}
-                title={skill.title}
-                description={skill.description}
-                proficiency={skill.proficiency}
-                techs={skill.techs}
-                achievements={skill.achievements}
-              />
-            </div>
+            <SkillCard 
+              key={index}
+              {...skill}
+              index={index}
+            />
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
