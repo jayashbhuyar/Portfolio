@@ -17,7 +17,7 @@ import {
   CodeIcon, 
   BriefcaseIcon,
   Menu,
-  X 
+  X , Monitor, Server, BarChart
 } from 'lucide-react';
 import backgroundImage from './images/Screenshot 2024-08-20 162916.png';
 
@@ -33,9 +33,9 @@ const CreativePortfolio = () => {
     { name: 'Projects', icon: BriefcaseIcon, link: '/projects' }
   ];
   const skills = [
-    { name: "Frontend Development", icon: "path-to-icon" },
-    { name: "Backend Development", icon: "path-to-icon" },
-    { name: "Data Analysis", icon: "path-to-icon" },
+    { name: "Frontend Development", icon:  <Monitor />  },
+    { name: "Backend Development", icon: <Server /> },
+    { name: "Data Analysis", icon: <BarChart /> },
     // Add more skills here
   ];
   
