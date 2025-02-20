@@ -17,6 +17,7 @@ import {
   CodeIcon, 
   BriefcaseIcon,
   Menu,
+  Eye,
   X , Monitor, Server, BarChart
 } from 'lucide-react';
 import backgroundImage from './images/Screenshot 2024-08-20 162916.png';
@@ -213,8 +214,8 @@ const CreativePortfolio = () => {
             <div className="flex justify-center md:justify-start space-x-4">
               {[
                 { 
-                  text: "Resume", 
-                  Icon: Download, 
+                  text: " Show Resume", 
+                  Icon: Eye, 
                   href: "https://drive.google.com/drive/folders/1t8tdhkAIVoS_KA8dcfEqacpzttBOEkkM?usp=drive_link", 
                   className: "bg-blue-600 text-white" 
                 },
