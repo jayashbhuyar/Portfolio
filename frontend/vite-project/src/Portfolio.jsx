@@ -120,7 +120,7 @@ const CreativePortfolio = () => {
                 </div>
               </motion.div>
             </div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="hidden md:block mt-8 sm:mt-10 md:mt-12 overflow-x-hidden">
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="hidden md:block mt-8 sm:mt-10 md:mt-12 overflow-hidden">
               <FloatingTechLogos />
             </motion.div>
           </div>

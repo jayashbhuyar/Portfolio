@@ -53,13 +53,13 @@ export default function FloatingTechLogos({ className = '' }) {
   }, []);
 
   return (
-    <div className={`flex flex-wrap items-center justify-center md:justify-start gap-4 md:gap-5 ${className}`} aria-hidden>
+    <div className={`flex flex-wrap items-center justify-center md:justify-start gap-4 md:gap-5 overflow-hidden max-w-full min-w-0 pb-10 ${className}`} aria-hidden>
       {techLogos.map(({ Icon, label, delay, opacity, color, logoUrl }, index) => {
         const isBlinking = index === blinkIndex;
         return (
           <motion.div
             key={label}
-            className="relative flex items-center justify-center rounded-xl pointer-events-auto tech-logo-float flex-shrink-0 group/tooltip"
+            className="relative flex items-center justify-center rounded-xl pointer-events-auto tech-logo-float flex-shrink-0 overflow-visible"
             style={{
               width: 52,
               height: 52,
@@ -90,7 +90,7 @@ export default function FloatingTechLogos({ className = '' }) {
             title={label}
           >
             {hovered === label && (
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 rounded-lg bg-navy-card border border-white/10 text-xs font-medium text-[#F8FAFC] whitespace-nowrap shadow-lg z-10 pointer-events-none">
+              <span className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1 rounded-lg bg-[#1E293B] border border-white/10 text-xs font-medium text-[#F8FAFC] whitespace-nowrap shadow-lg z-[100] pointer-events-none">
                 {label}
               </span>
             )}
@@ -116,23 +116,33 @@ export default function FloatingTechLogos({ className = '' }) {
   );
 }
 
-function TechLogoItem({ Icon, label, color, logoUrl, isBlinking, isHovered, onHover }) {
+function TechLogoItem({ Icon, label, color, logoUrl, isBlinking, isHovered, onHover, onTap, showLabelBelow }) {
   return (
     <motion.div
-      className="relative flex-shrink-0 flex items-center justify-center rounded-xl w-14 h-14"
+      className="relative flex-shrink-0 flex items-center justify-center rounded-xl w-14 h-14 overflow-visible"
       style={{
         background: 'rgba(30, 41, 59, 0.6)',
         backdropFilter: 'blur(10px)',
         border: '1px solid rgba(255,255,255,0.05)',
         boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+        touchAction: 'none',
       }}
       whileTap={{ scale: 0.95 }}
       onMouseEnter={() => onHover(label)}
       onMouseLeave={() => onHover(null)}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onTap?.(label);
+      }}
       title={label}
     >
       {isHovered && (
-        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 rounded-lg bg-[#1E293B] border border-white/10 text-xs font-medium text-[#F8FAFC] whitespace-nowrap shadow-lg z-10 pointer-events-none">
+        <span
+          className={`absolute left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-lg bg-[#1E293B] border border-white/10 text-xs font-medium text-[#F8FAFC] whitespace-nowrap shadow-lg z-[100] pointer-events-none ${
+            showLabelBelow ? 'top-full mt-2' : 'bottom-full mb-2'
+          }`}
+        >
           {label}
         </span>
       )}
@@ -191,6 +201,8 @@ export function TechStripMobile({ className = '' }) {
               isBlinking={isBlinking}
               isHovered={hovered === item.label}
               onHover={setHovered}
+              onTap={(label) => setHovered((prev) => (prev === label ? null : label))}
+              showLabelBelow
             />
           );
         })}
@@ -199,9 +211,12 @@ export function TechStripMobile({ className = '' }) {
   };
 
   return (
-    <div className={`md:hidden overflow-hidden pt-4 pb-2 -mx-2 space-y-3 ${className}`}>
-      <div className="overflow-hidden w-full">{renderRow(row1Logos, 'ltr')}</div>
-      <div className="overflow-hidden w-full">{renderRow(row2Logos, 'rtl')}</div>
+    <div
+      className={`md:hidden overflow-x-hidden pt-4 pb-2 -mx-2 space-y-4 ${className}`}
+      style={{ overscrollBehavior: 'contain' }}
+    >
+      <div className="overflow-x-hidden w-full pb-12">{renderRow(row1Logos, 'ltr')}</div>
+      <div className="overflow-x-hidden w-full pb-12">{renderRow(row2Logos, 'rtl')}</div>
     </div>
   );
 }
