@@ -116,9 +116,51 @@ export default function FloatingTechLogos({ className = '' }) {
   );
 }
 
+function TechLogoItem({ Icon, label, color, logoUrl, isBlinking, isHovered, onHover }) {
+  return (
+    <motion.div
+      className="relative flex-shrink-0 flex items-center justify-center rounded-xl w-14 h-14"
+      style={{
+        background: 'rgba(30, 41, 59, 0.6)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255,255,255,0.05)',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+      }}
+      whileTap={{ scale: 0.95 }}
+      onMouseEnter={() => onHover(label)}
+      onMouseLeave={() => onHover(null)}
+      title={label}
+    >
+      {isHovered && (
+        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 rounded-lg bg-[#1E293B] border border-white/10 text-xs font-medium text-[#F8FAFC] whitespace-nowrap shadow-lg z-10 pointer-events-none">
+          {label}
+        </span>
+      )}
+      <motion.span
+        className="block transition-colors duration-200 flex items-center justify-center"
+        style={{ color: logoUrl ? undefined : color }}
+        animate={{
+          scale: isHovered ? 1.1 : isBlinking ? 1.12 : 1,
+          filter: isHovered ? 'brightness(1.2)' : isBlinking ? 'brightness(1.4)' : 'brightness(1)',
+        }}
+        transition={{ duration: 0.2 }}
+      >
+        {logoUrl ? (
+          <img src={logoUrl} alt={label} width={28} height={28} className="object-contain" />
+        ) : (
+          <Icon size={28} />
+        )}
+      </motion.span>
+    </motion.div>
+  );
+}
+
 export function TechStripMobile({ className = '' }) {
   const [hovered, setHovered] = useState(null);
   const [blinkIndex, setBlinkIndex] = useState(0);
+  const mid = Math.ceil(techLogos.length / 2);
+  const row1Logos = techLogos.slice(0, mid);
+  const row2Logos = techLogos.slice(mid);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -127,51 +169,39 @@ export function TechStripMobile({ className = '' }) {
     return () => clearInterval(id);
   }, []);
 
-  return (
-    <div className={`md:hidden overflow-x-auto py-4 px-2 -mx-2 ${className}`} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-      <style>{`.tech-strip::-webkit-scrollbar { display: none; }`}</style>
-      <div className="tech-strip flex gap-4 justify-start min-w-max">
-        {techLogos.map(({ Icon, label, color, logoUrl }, index) => {
-          const isBlinking = index === blinkIndex;
+  const renderRow = (items, direction) => {
+    /* 3 copies: scroll by 1/3 so view is always full, loop is seamless */
+    const duplicated = [...items, ...items, ...items];
+    const marqueeClass = direction === 'ltr' ? 'tech-marquee-ltr' : 'tech-marquee-rtl';
+    return (
+      <div
+        className={`tech-marquee-row flex gap-4 ${marqueeClass}`}
+        style={{ willChange: 'transform', width: 'max-content' }}
+      >
+        {duplicated.map((item, index) => {
+          const originalIndex = techLogos.findIndex((t) => t.label === item.label);
+          const isBlinking = originalIndex === blinkIndex;
           return (
-            <motion.div
-              key={label}
-              className="relative flex-shrink-0 flex items-center justify-center rounded-xl w-14 h-14"
-              style={{
-                background: 'rgba(30, 41, 59, 0.6)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255,255,255,0.05)',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
-              }}
-              whileTap={{ scale: 0.95 }}
-              onMouseEnter={() => setHovered(label)}
-              onMouseLeave={() => setHovered(null)}
-              title={label}
-            >
-              {hovered === label && (
-                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 rounded-lg bg-[#1E293B] border border-white/10 text-xs font-medium text-[#F8FAFC] whitespace-nowrap shadow-lg z-10 pointer-events-none">
-                  {label}
-                </span>
-              )}
-              <motion.span
-                className="block transition-colors duration-200 flex items-center justify-center"
-                style={{ color: logoUrl ? undefined : color }}
-                animate={{
-                  scale: hovered === label ? 1.1 : isBlinking ? 1.12 : 1,
-                  filter: hovered === label ? 'brightness(1.2)' : isBlinking ? 'brightness(1.4)' : 'brightness(1)',
-                }}
-                transition={{ duration: 0.2 }}
-              >
-                {logoUrl ? (
-                  <img src={logoUrl} alt={label} width={28} height={28} className="object-contain" />
-                ) : (
-                  <Icon size={28} />
-                )}
-              </motion.span>
-            </motion.div>
+            <TechLogoItem
+              key={`${item.label}-${direction}-${index}`}
+              Icon={item.Icon}
+              label={item.label}
+              color={item.color}
+              logoUrl={item.logoUrl}
+              isBlinking={isBlinking}
+              isHovered={hovered === item.label}
+              onHover={setHovered}
+            />
           );
         })}
       </div>
+    );
+  };
+
+  return (
+    <div className={`md:hidden overflow-hidden pt-4 pb-2 -mx-2 space-y-3 ${className}`}>
+      <div className="overflow-hidden w-full">{renderRow(row1Logos, 'ltr')}</div>
+      <div className="overflow-hidden w-full">{renderRow(row2Logos, 'rtl')}</div>
     </div>
   );
 }

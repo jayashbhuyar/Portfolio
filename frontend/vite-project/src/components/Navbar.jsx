@@ -46,10 +46,10 @@ export default function Navbar() {
           showSolidNav ? 'bg-navy-primary/95 backdrop-blur-lg border-b border-white/5' : 'bg-transparent'
         }`}
       >
-        <div className="container mx-auto flex justify-between items-center px-4 py-3 md:py-4 max-w-6xl">
+        <div className="container mx-auto flex justify-between items-center px-4 sm:px-6 py-3 md:py-4 max-w-6xl w-full min-w-0">
           <Link
             to="/"
-            className="text-lg md:text-xl font-bold tracking-tight text-[#F8FAFC] hover:text-accent-blue transition-colors"
+            className="text-base sm:text-lg md:text-xl font-bold tracking-tight text-[#F8FAFC] hover:text-accent-blue transition-colors truncate min-w-0 mr-2"
           >
             Jayash Bhuyar
           </Link>
@@ -116,10 +116,10 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-              className="absolute right-0 top-0 bottom-0 w-full max-w-[280px] bg-navy-card border-l border-white/10 shadow-2xl"
+              className="absolute right-0 top-0 bottom-0 w-full max-w-[280px] min-w-0 bg-navy-card border-l border-white/10 shadow-2xl overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex flex-col pt-20 px-6 gap-1">
+              <div className="flex flex-col pt-20 px-4 sm:px-6 gap-1 pb-8">
                 {navSections.map((section) => {
                   const isActive = activeSection === section.name.toLowerCase();
                   return (

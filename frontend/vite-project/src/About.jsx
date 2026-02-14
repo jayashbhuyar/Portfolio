@@ -90,30 +90,30 @@ Beyond the code, I thrive on continuous learning and exploring emerging technolo
   };
 
   return (
-    <div className="min-h-screen bg-navy-secondary font-sans text-[#F8FAFC]">
+    <div className="min-h-screen bg-navy-secondary font-sans text-[#F8FAFC] overflow-x-hidden">
       <div className="fixed inset-0 bg-navy-secondary pointer-events-none" />
       <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at top right, rgba(79,70,229,0.12), transparent 50%)' }} />
 
       <motion.div
-        className="container mx-auto px-4 pt-8 pb-20 relative z-10 max-w-5xl"
+        className="container mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-12 sm:pb-20 relative z-10 max-w-5xl w-full min-w-0"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         <motion.section
           variants={itemVariants}
-          className="card-premium p-6 md:p-10 mb-12"
+          className="card-premium p-5 sm:p-6 md:p-10 mb-8 sm:mb-12 min-w-0"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-semibold text-[#F8FAFC] mb-6 flex items-center gap-3">
-            <Zap className="text-accent-blue" /> About Me
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-semibold text-[#F8FAFC] mb-4 sm:mb-6 flex items-center gap-3 flex-wrap">
+            <Zap className="text-accent-blue shrink-0" /> About Me
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <div className="space-y-4 min-w-0">
               {aboutMeContent.split('\n\n').map((paragraph, index) => (
                 <motion.p
                   key={index}
-                  className="text-[#CBD5E1] leading-relaxed"
+                  className="text-[#CBD5E1] leading-relaxed text-sm sm:text-base"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 + index * 0.1 }}
@@ -123,14 +123,14 @@ Beyond the code, I thrive on continuous learning and exploring emerging technolo
               ))}
             </div>
 
-            <div>
-              <h3 className="text-lg font-display font-semibold text-[#F8FAFC] mb-4">My Tech Toolkit</h3>
+            <div className="min-w-0">
+              <h3 className="text-base sm:text-lg font-display font-semibold text-[#F8FAFC] mb-3 sm:mb-4">My Tech Toolkit</h3>
               <div className="space-y-3">
                 {skills.map((skill) => (
                   <motion.div
                     key={skill.name}
                     variants={itemVariants}
-                    className="rounded-xl p-4 bg-navy-card/80 border border-white/5"
+                    className="rounded-xl p-3 sm:p-4 bg-navy-card/80 border border-white/5 min-w-0"
                   >
                     <div className="flex items-center gap-3 mb-2">
                       {skill.icon}
@@ -152,9 +152,9 @@ Beyond the code, I thrive on continuous learning and exploring emerging technolo
             </div>
           </div>
 
-          <div className="mt-10 text-center">
-            <h3 className="text-xl font-display font-semibold text-[#F8FAFC] mb-2">Let's Connect</h3>
-            <p className="text-[#94A3B8] mb-4 text-sm max-w-xl mx-auto">
+          <div className="mt-8 sm:mt-10 text-center min-w-0">
+            <h3 className="text-lg sm:text-xl font-display font-semibold text-[#F8FAFC] mb-2">Let's Connect</h3>
+            <p className="text-[#94A3B8] mb-4 text-xs sm:text-sm max-w-xl mx-auto px-1">
               Interested in collaboration, discussing tech, or exploring projects? I'm open to connecting with developers and mentors.
             </p>
             <motion.a
@@ -170,18 +170,18 @@ Beyond the code, I thrive on continuous learning and exploring emerging technolo
 
         <motion.section
           variants={itemVariants}
-          className="card-premium p-6 md:p-10 mb-12"
+          className="card-premium p-5 sm:p-6 md:p-10 mb-8 sm:mb-12 min-w-0"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-semibold text-[#F8FAFC] mb-8 flex items-center gap-3">
-            <Briefcase className="text-accent-blue" /> Experience
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-semibold text-[#F8FAFC] mb-6 sm:mb-8 flex items-center gap-3 flex-wrap">
+            <Briefcase className="text-accent-blue shrink-0" /> Experience
           </h2>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {experience.map((exp) => (
               <motion.div
                 key={exp.company}
                 variants={itemVariants}
-                className="card-premium rounded-xl p-6"
+                className="card-premium rounded-xl p-4 sm:p-6 min-w-0"
               >
                 <div className="flex flex-wrap items-baseline gap-2 mb-2">
                   <h3 className="text-lg font-semibold text-[#F8FAFC]">{exp.role}</h3>
@@ -195,18 +195,18 @@ Beyond the code, I thrive on continuous learning and exploring emerging technolo
 
         <motion.section
           variants={itemVariants}
-          className="card-premium p-6 md:p-10 mb-12"
+          className="card-premium p-5 sm:p-6 md:p-10 mb-8 sm:mb-12 min-w-0"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-semibold text-[#F8FAFC] mb-8 flex items-center gap-3">
-            <GraduationCap className="text-accent-blue" /> Educational Journey
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-semibold text-[#F8FAFC] mb-6 sm:mb-8 flex items-center gap-3 flex-wrap">
+            <GraduationCap className="text-accent-blue shrink-0" /> Educational Journey
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {educationHistory.map((edu) => (
               <motion.div
                 key={edu.level}
                 variants={itemVariants}
-                className="card-premium rounded-2xl p-6 text-center"
+                className="card-premium rounded-2xl p-4 sm:p-6 text-center min-w-0"
               >
                 <div className="mb-4 flex justify-center">
                   <img
@@ -218,8 +218,8 @@ Beyond the code, I thrive on continuous learning and exploring emerging technolo
                     }}
                   />
                 </div>
-                <h3 className="text-lg font-semibold text-[#F8FAFC] mb-1">{edu.level}</h3>
-                <p className="text-[#CBD5E1] text-sm mb-2">{edu.school}</p>
+                <h3 className="text-base sm:text-lg font-semibold text-[#F8FAFC] mb-1">{edu.level}</h3>
+                <p className="text-[#CBD5E1] text-xs sm:text-sm mb-2 break-words">{edu.school}</p>
                 <div className="flex items-center justify-center gap-1 text-[#94A3B8] text-xs">
                   <MapPin className="w-4 h-4 shrink-0" /> {edu.location}
                 </div>
@@ -233,16 +233,16 @@ Beyond the code, I thrive on continuous learning and exploring emerging technolo
 
         <motion.section
           variants={itemVariants}
-          className="card-premium p-6 md:p-10"
+          className="card-premium p-5 sm:p-6 md:p-10 min-w-0"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-semibold text-[#F8FAFC] mb-8 flex items-center gap-3">
-            <Award className="text-accent-blue" /> Achievements
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-semibold text-[#F8FAFC] mb-6 sm:mb-8 flex items-center gap-3 flex-wrap">
+            <Award className="text-accent-blue shrink-0" /> Achievements
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <motion.div
               variants={itemVariants}
-              className="card-premium rounded-xl p-6"
+              className="card-premium rounded-xl p-4 sm:p-6 min-w-0"
             >
               <Target className="text-accent-blue w-10 h-10 mb-4" />
               <h3 className="text-lg font-semibold text-[#F8FAFC] mb-2">Coding Proficiency</h3>
@@ -265,9 +265,9 @@ Beyond the code, I thrive on continuous learning and exploring emerging technolo
         </motion.section>
       </motion.div>
 
-      <footer className="border-t border-white/5 bg-navy-section py-6">
-        <div className="container mx-auto text-center">
-          <p className="text-[#94A3B8] text-sm">© {new Date().getFullYear()} Jayash Bhuyar. All rights reserved.</p>
+      <footer className="border-t border-white/5 bg-navy-section py-4 sm:py-6">
+        <div className="container mx-auto px-4 sm:px-6 text-center min-w-0">
+          <p className="text-[#94A3B8] text-xs sm:text-sm">© {new Date().getFullYear()} Jayash Bhuyar. All rights reserved.</p>
         </div>
       </footer>
     </div>

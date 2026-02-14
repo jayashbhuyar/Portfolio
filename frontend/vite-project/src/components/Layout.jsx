@@ -5,7 +5,7 @@ export default function Layout() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-16 md:pt-20">
+      <main className="min-h-screen pt-14 sm:pt-16 md:pt-20 overflow-x-hidden">
         <Outlet />
       </main>
     </>
