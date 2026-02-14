@@ -212,10 +212,10 @@ export function TechStripMobile({ className = '' }) {
 
   return (
     <div
-      className={`md:hidden overflow-x-hidden pt-4 pb-2 -mx-2 space-y-4 ${className}`}
+      className={`md:hidden overflow-x-hidden pt-4 pb-2 -mx-2 space-y-0 ${className}`}
       style={{ overscrollBehavior: 'contain' }}
     >
-      <div className="overflow-x-hidden w-full pb-12">{renderRow(row1Logos, 'ltr')}</div>
+      <div className="overflow-x-hidden w-full pb-6">{renderRow(row1Logos, 'ltr')}</div>
       <div className="overflow-x-hidden w-full pb-12">{renderRow(row2Logos, 'rtl')}</div>
     </div>
   );
